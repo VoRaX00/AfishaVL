@@ -1,0 +1,8 @@
+server:
+  port: "8000"
+db:
+  host: "localhost"
+  port: "5417"
+  name: "afisha_db"
+  username: "postgres"
+  sslmode: "disable"
