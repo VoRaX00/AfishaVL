@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Afisha/internal/application"
 	"Afisha/internal/handler"
+	"Afisha/internal/handler/extension"
 	"Afisha/internal/infrastructure"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -40,8 +40,8 @@ func main() {
 		logrus.Fatal(err)
 	}
 
-	repos := infrastructure.NewRepositories(db)
-	services := application.NewServices(repos)
+	repos := extension.NewRepositories(db)
+	services := extension.NewServices(repos)
 	handlers := handler.NewHandler(services)
 
 	server := new(Server)
@@ -69,7 +69,7 @@ func initDBConfig() infrastructure.Config {
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
 		Username: viper.GetString("db.username"),
-		Password: viper.GetString("db.password"),
+		Password: os.Getenv("db.password"),
 		Database: viper.GetString("db.name"),
 		SSLMode:  viper.GetString("db.sslmode"),
 	}

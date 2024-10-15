@@ -1,17 +1,17 @@
 package handler
 
 import (
-	"Afisha/internal/application"
+	"Afisha/internal/handler/extension"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Handler struct {
-	service *application.Services
+	service *extension.Services
 }
 
-func NewHandler(service *application.Services) *Handler {
+func NewHandler(service *extension.Services) *Handler {
 	return &Handler{
 		service: service,
 	}
