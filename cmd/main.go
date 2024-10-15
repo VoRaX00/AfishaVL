@@ -1,12 +1,17 @@
 package main
 
 import (
+	"Afisha/internal/application"
+	"Afisha/internal/handler"
 	"Afisha/internal/infrastructure"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	"github.com/pressly/goose/v3"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
@@ -35,6 +40,22 @@ func main() {
 		logrus.Fatal(err)
 	}
 
+	repos := infrastructure.NewRepositories(db)
+	services := application.NewServices(repos)
+	handlers := handler.NewHandler(services)
+
+	server := new(Server)
+
+	go func() {
+		if err = server.Start(viper.GetString("server.port"), handlers.InitRouter()); err != nil {
+			logrus.Fatal(err)
+		}
+	}()
+
+	logrus.Info("Server started")
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
 }
 
 func initConfig() error {
