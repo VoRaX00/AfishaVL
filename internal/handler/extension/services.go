@@ -6,10 +6,11 @@ import (
 
 type Services struct {
 	application.IUserService
+	application.ITokenRepository
 }
 
 func NewServices(repos *Repositories) *Services {
 	return &Services{
-		IUserService: application.NewUserService(repos),
+		IUserService: application.NewUserService(repos.IUsersRepository, repos.ITokenRepository),
 	}
 }
