@@ -2,22 +2,23 @@ package handler
 
 import (
 	"Afisha/internal/handler/extension"
+	"Afisha/pkg/tokenManager"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"os"
 )
 
 type Handler struct {
 	service *extension.Services
-}
-
-func test() {
-
+	manager tokenManager.ITokenManager
 }
 
 func NewHandler(service *extension.Services) *Handler {
+	signingKey := os.Getenv("SIGNING_KEY")
 	return &Handler{
 		service: service,
+		manager: tokenManager.NewTokenManager(signingKey),
 	}
 }
 

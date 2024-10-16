@@ -3,23 +3,37 @@ package application
 import "Afisha/internal/domain"
 
 type UserService struct {
-	repo IUsersRepository
+	userRepo  IUsersRepository
+	tokenRepo ITokenRepository
 }
 
-func NewUserService(repo IUsersRepository) *UserService {
+func NewUserService(userRepo IUsersRepository, tokenRepo ITokenRepository) *UserService {
 	return &UserService{
-		repo: repo,
+		userRepo:  userRepo,
+		tokenRepo: tokenRepo,
 	}
 }
 
-func (s *UserService) Create(user domain.User) (string, error) {
-	return s.repo.Create(user)
+func (s *UserService) Create(user domain.UserRegister) (string, error) {
+	return s.userRepo.Create(user)
 }
 
 func (s *UserService) Update(user domain.User) error {
-	return s.repo.Update(user)
+	return s.userRepo.Update(user)
 }
 
 func (s *UserService) GetById(userId string) (domain.User, error) {
-	return s.repo.GetById(userId)
+	return s.userRepo.GetById(userId)
+}
+
+func (s *UserService) Verify(user domain.UserToLogin) (domain.User, error) {
+	return s.userRepo.Verify(user)
+}
+
+func (s *UserService) AddRefreshToken(userId, ip, token string) error {
+	return s.tokenRepo.Create(userId, ip, token)
+}
+
+func (s *UserService) UpdateRefreshToken(userId, ip, token string) error {
+	return s.tokenRepo.Update(userId, ip, token)
 }

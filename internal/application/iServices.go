@@ -8,3 +8,8 @@ type IUserService interface {
 	GetById(userId string) (domain.User, error)
 	Verify(user domain.UserToLogin) (domain.User, error)
 }
+
+type ITokenService interface {
+	AddRefreshToken(userId, ip, token string) error
+	UpdateRefreshToken(userId, ip, token string) error
+}

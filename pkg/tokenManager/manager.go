@@ -16,7 +16,7 @@ type tokenClaims struct {
 
 type ITokenManager interface {
 	GetAccessToken(ipClient string, ttl time.Duration) (string, error)
-	GetRefreshToken(ipClient string, ttl time.Duration) (string, error)
+	GetRefreshToken() (string, error)
 	HashRefreshToken(token string) (string, error)
 }
 

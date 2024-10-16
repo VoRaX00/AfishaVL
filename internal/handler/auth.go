@@ -5,6 +5,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"time"
+)
+
+const (
+	accessTokenTTL  = time.Hour * 24
+	refreshTokenTTL = time.Hour * 48
 )
 
 func (h *Handler) SignIn(ctx *gin.Context) {
@@ -21,7 +27,26 @@ func (h *Handler) SignIn(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ip := ctx.ClientIP()
+	accessToken, err := h.manager.GetAccessToken(ip, accessTokenTTL)
+	if err != nil {
+		logrus.Error(err)
+		NewErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	refreshToken, err := h.manager.GetRefreshToken()
+	if err != nil {
+		logrus.Error(err)
+		NewErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"User":         user,
+		"AccessToken":  accessToken,
+		"RefreshToken": refreshToken,
+	})
 }
 
 func (h *Handler) SignOut(ctx *gin.Context) {
