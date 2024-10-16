@@ -15,9 +15,14 @@ func NewUserRepository(db *sqlx.DB) *UserRepository {
 	}
 }
 
-func (r *UserRepository) Create(user domain.UserRegister) (string, error) {
-	query := "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id"
-	err := r.db.QueryRow(query, user)
+func (r *UserRepository) Create(user domain.UserRegister) (int, error) {
+	var id int
+	query := "INSERT INTO users (phone, password_hash) VALUES ($1, $2) RETURNING id"
+	row := r.db.QueryRow(query, user.Phone, user.Password, &id)
+	if err := row.Scan(&id); err != nil {
+		return 0, err
+	}
+	return id, nil
 }
 
 func (r *UserRepository) Update(user domain.User) error {
@@ -29,5 +34,5 @@ func (r *UserRepository) GetById(userId string) (domain.User, error) {
 }
 
 func (r *UserRepository) Verify(user domain.UserToLogin) (domain.User, error) {
-
+	return domain.User{}, nil
 }

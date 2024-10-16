@@ -1,6 +1,8 @@
 package application
 
-import "Afisha/internal/domain"
+import (
+	"Afisha/internal/domain"
+)
 
 type UserService struct {
 	userRepo  IUsersRepository
@@ -14,7 +16,7 @@ func NewUserService(userRepo IUsersRepository, tokenRepo ITokenRepository) *User
 	}
 }
 
-func (s *UserService) Create(user domain.UserRegister) (string, error) {
+func (s *UserService) Create(user domain.UserRegister) (int, error) {
 	return s.userRepo.Create(user)
 }
 

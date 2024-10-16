@@ -6,5 +6,6 @@ type UserToLogin struct {
 }
 
 type UserRegister struct {
-	phone string
+	Phone    string
+	Password string
 }

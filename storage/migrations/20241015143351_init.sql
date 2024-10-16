@@ -2,7 +2,7 @@
 -- +goose StatementBegin
 CREATE TABLE users (
     id INT PRIMARY KEY,
-    login TEXT NOT NULL,
+    phone TEXT NOT NULL,
     password_hash TEXT NOT NULL
 );
 
