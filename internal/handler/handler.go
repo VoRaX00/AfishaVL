@@ -11,6 +11,10 @@ type Handler struct {
 	service *extension.Services
 }
 
+func test() {
+
+}
+
 func NewHandler(service *extension.Services) *Handler {
 	return &Handler{
 		service: service,
