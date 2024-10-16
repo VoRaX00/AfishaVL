@@ -8,7 +8,7 @@ CREATE TABLE users (
 
 CREATE TABLE refresh_tokens (
     id SERIAL PRIMARY KEY,
-    user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     refresh_token_hash TEXT UNIQUE NOT NULL,
     ip VARCHAR(45) NOT NULL,
     expires_at TIMESTAMPTZ NOT NULL,
