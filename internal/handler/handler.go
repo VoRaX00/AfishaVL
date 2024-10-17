@@ -33,6 +33,13 @@ func (h *Handler) InitRouter() *gin.Engine {
 		api.POST("/signUp", h.SignUp)
 		api.POST("/signOut", h.SignOut)
 	}
+	events := router.Group("/events")
+	{
+		events.GET("/:id", h.GetEventById)
+		events.POST("/all-events", h.AllEventsPage)
+		events.POST("/popular", h.PopularPage)
+		events.POST("/expectations", h.UserExpected)
 
+	}
 	return router
 }
