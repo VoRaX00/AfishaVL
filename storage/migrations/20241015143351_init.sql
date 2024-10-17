@@ -15,20 +15,7 @@ CREATE TABLE refresh_tokens (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE events (
-    id INT PRIMARY KEY,
-    user_id INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
-    name TEXT NOT NULL,
-    description TEXT,
-    city_id INT REFERENCES cities (id) ON DELETE CASCADE NOT NULL,
-    category_id INT REFERENCES categories (id) ON DELETE CASCADE NOT NULL,
-    image bytea NULL,
-    price_id INT REFERENCES prices(id) ON DELETE CASCADE NOT NULL,
-    age_limit INT NOT NULL,
-    schedule_id INT REFERENCES schedules(id) ON DELETE CASCADE NOT NULL,
-    registration BOOLEAN NOT NULL DEFAULT(false),
-    contact_id INT REFERENCES contacts(id) ON DELETE CASCADE NOT NULL
-);
+
 
 CREATE TABLE cities (
     id SERIAL PRIMARY KEY,
@@ -60,29 +47,46 @@ CREATE TABLE contacts (
     email TEXT NOT NULL,
     extra_contacts TEXT NOT NULL
 );
+CREATE TABLE events (
+    id INT PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    city_id INT REFERENCES cities (id) ON DELETE CASCADE NOT NULL,
+    category_id INT REFERENCES categories (id) ON DELETE CASCADE NOT NULL,
+    image bytea NULL,
+    price_id INT REFERENCES prices(id) ON DELETE CASCADE NOT NULL,
+    age_limit INT NOT NULL,
+    schedule_id INT REFERENCES schedules(id) ON DELETE CASCADE NOT NULL,
+    registration BOOLEAN NOT NULL DEFAULT(false),
+    contact_id INT REFERENCES contacts(id) ON DELETE CASCADE NOT NULL
+);
 
 INSERT INTO cities (name) VALUES
-    ('Владивосток'), ('Спасск-Дальний'), ('Артём'), ('Сибирцево'), ('Приморский край, с. Анисимовка'),
-    ('Арсеньев'), ('Уссурийск'), ('Ливадия'), ('Приморский край, с. Утёсное'), ('Покровка'),
-    ('Приморский край, с. Новокачалинск'), ('Михайловка'), ('п. Веневитиново'), ('Вольно-Надеждинское'),
-    ('Тавричанка'), ('о. Русский'), ('Дальнегорск'), ('Пограничный'), ('Находка'), ('Врангель'),
-    ('Штыково'), ('Приморский край, с.Молчановка, ул. с. Молчановка'), ('Приморский край, с. Таёжка'), ('Западный'),
-    ('Андреевка'), ('Черниговка'), ('Дальнереченск'), ('Золотая Долина'), ('Владимиро-Александровское'),
-    ('Партизанск');
+      ('Владивосток'), ('Спасск-Дальний'), ('Артём'), ('Сибирцево'), ('Приморский край, с. Анисимовка'),
+      ('Арсеньев'), ('Уссурийск'), ('Ливадия'), ('Приморский край, с. Утёсное'), ('Покровка'),
+      ('Приморский край, с. Новокачалинск'), ('Михайловка'), ('п. Веневитиново'), ('Вольно-Надеждинское'),
+      ('Тавричанка'), ('о. Русский'), ('Дальнегорск'), ('Пограничный'), ('Находка'), ('Врангель'),
+      ('Штыково'), ('Приморский край, с.Молчановка, ул. с. Молчановка'), ('Приморский край, с. Таёжка'), ('Западный'),
+      ('Андреевка'), ('Черниговка'), ('Дальнереченск'), ('Золотая Долина'), ('Владимиро-Александровское'),
+      ('Партизанск');
 
 INSERT INTO categories (name) VALUES
-    ('Концерты'), ('Театры'), ('Вечеринки'), ('Спорт'), ('Детям'),
-    ('Музеи и галереи'),('Цирк'), ('Городское событие'), ('Обучение'), ('Впечатления'),
-    ('Экскурсие и туры'), ('Мастер-классы'), ('Стендап');
+      ('Концерты'), ('Театры'), ('Вечеринки'), ('Спорт'), ('Детям'),
+      ('Музеи и галереи'),('Цирк'), ('Городское событие'), ('Обучение'), ('Впечатления'),
+      ('Экскурсие и туры'), ('Мастер-классы'), ('Стендап');
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
+
+DROP TABLE events;
 DROP TABLE cities;
 DROP TABLE categories;
 DROP TABLE prices;
 DROP TABLE schedules;
 DROP TABLE contacts;
+DROP TABLE refresh_tokens;
 DROP TABLE users;
-DROP TABLE events
+
 -- +goose StatementEnd
