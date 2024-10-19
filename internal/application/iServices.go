@@ -13,3 +13,7 @@ type ITokenService interface {
 	AddRefreshToken(userId, ip, token string) error
 	UpdateRefreshToken(userId, ip, token string) error
 }
+
+type IEventsService interface {
+	GetById(eventId string) (domain.Event, error)
+}

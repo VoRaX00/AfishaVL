@@ -13,3 +13,7 @@ type ITokenRepository interface {
 	Create(userId, ip, token string) error
 	Update(userId, ip, token string) error
 }
+
+type IEventsRepository interface {
+	GetById(eventId string) (domain.Event, error)
+}

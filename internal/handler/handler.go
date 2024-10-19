@@ -39,7 +39,6 @@ func (h *Handler) InitRouter() *gin.Engine {
 		events.POST("/all-events", h.AllEventsPage)
 		events.POST("/popular", h.PopularPage)
 		events.POST("/expectations", h.UserExpected)
-
 	}
 	return router
 }
