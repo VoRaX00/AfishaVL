@@ -15,8 +15,6 @@ CREATE TABLE refresh_tokens (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
-
-
 CREATE TABLE cities (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL

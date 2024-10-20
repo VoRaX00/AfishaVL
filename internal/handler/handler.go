@@ -36,9 +36,13 @@ func (h *Handler) InitRouter() *gin.Engine {
 	events := router.Group("/events")
 	{
 		events.GET("/:id", h.GetEventById)
-		events.POST("/all-events", h.AllEventsPage)
-		events.POST("/popular", h.PopularPage)
+		events.GET("/all-events", h.AllEventsPage)
+		events.GET("/get-by-name", h.GetEventsByName)
+		events.GET("/get-by-filters", h.GetEventsByFilters)
 		events.POST("/expectations", h.UserExpected)
+		events.POST("/buy-tickets", h.BuyTickets)
+		events.POST("/create-event", h.CreateEvent)
+		events.DELETE("delete-event", h.DeleteEvent)
 	}
 	return router
 }
