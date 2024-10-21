@@ -12,7 +12,7 @@ func NewEventService(repo IEventsRepository) *EventService {
 	}
 }
 
-func (s *EventService) Create(event domain.Event) (int, error) {
+func (s *EventService) Create(event domain.CreateEvent) (int, error) {
 	return s.repo.Create(event)
 }
 

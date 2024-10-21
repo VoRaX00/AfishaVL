@@ -15,7 +15,7 @@ type ITokenService interface {
 }
 
 type IEventsService interface {
-	Create(event domain.Event) (int, error)
+	Create(event domain.CreateEvent) (int, error)
 	Update(event domain.Event) error
 	GetById(eventId string) (domain.Event, error)
 	Delete(eventId string) error
