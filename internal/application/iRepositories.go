@@ -13,7 +13,7 @@ type IUsersRepository interface {
 
 type ITokenRepository interface {
 	Create(token domain.RefreshToken) error
-	Update(newTokenHash, tokenHash, ipClient string, ttl time.Duration) error
+	Update(newTokenHash, tokenHash, ipClient string, ttl time.Duration) (string, error)
 }
 
 type IEventsRepository interface {
