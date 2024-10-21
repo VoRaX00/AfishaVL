@@ -25,14 +25,22 @@ func (r *UserRepository) Create(user domain.UserRegister) (int, error) {
 	return id, nil
 }
 
-func (r *UserRepository) Update(user domain.User) error {
-	return nil
-}
-
-func (r *UserRepository) GetById(userId string) (domain.User, error) {
-	return domain.User{}, nil
+func (r *UserRepository) GetById(userId int) (domain.User, error) {
+	var user domain.User
+	query := "SELECT * FROM users WHERE id = $1"
+	row := r.db.QueryRow(query, userId)
+	if err := row.Scan(&user); err != nil {
+		return domain.User{}, err
+	}
+	return user, nil
 }
 
 func (r *UserRepository) Verify(user domain.UserToLogin) (domain.User, error) {
-	return domain.User{}, nil
+	var usr domain.User
+	query := "SELECT * FROM users WHERE phone = $1 AND password_hash = $2"
+	row := r.db.QueryRow(query, usr.Login, user.Password)
+	if err := row.Scan(&usr); err != nil {
+		return domain.User{}, err
+	}
+	return usr, nil
 }

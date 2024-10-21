@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"os"
 )
 
 type Handler struct {
@@ -15,10 +14,8 @@ type Handler struct {
 }
 
 func NewHandler(service *extension.Services) *Handler {
-	signingKey := os.Getenv("SIGNING_KEY")
 	return &Handler{
 		service: service,
-		manager: tokenManager.NewTokenManager(signingKey),
 	}
 }
 
